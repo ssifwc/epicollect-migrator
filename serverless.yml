@@ -1,0 +1,25 @@
+service: epicollect-migrator
+
+provider:
+  name: aws
+  region: us-east-1
+  runtime: python3.6
+
+functions:
+  migrate:
+    handler: epicollect_migrator.handler.handle
+    name: epicollect_migrator
+    events:
+      - schedule: rate(24 hours)
+    environment:
+      EPICOLLECT_BASE_URL: ${file(./serverless.env.yml):${self:provider.stage}.EPICOLLECT_BASE_URL}
+      EPICOLLECT_PROJECT_NAME: ${file(./serverless.env.yml):${self:provider.stage}.EPICOLLECT_PROJECT_NAME}
+      EPICOLLECT_CLIENT_ID: ${file(./serverless.env.yml):${self:provider.stage}.EPICOLLECT_CLIENT_ID}
+      EPICOLLECT_CLIENT_SECRET: ${file(./serverless.env.yml):${self:provider.stage}.EPICOLLECT_CLIENT_SECRET}
+      DATABASE_CONNECTION_URI: ${file(./serverless.env.yml):${self:provider.stage}.DATABASE_CONNECTION_URI}
+
+plugins:
+  - serverless-python-requirements
+custom:
+  pythonRequirements:
+    dockerizePip: non-linux
