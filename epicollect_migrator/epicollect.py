@@ -1,5 +1,4 @@
 import requests
-from dateutil import parser
 from shapely.geometry import Point
 
 
@@ -71,7 +70,7 @@ class Epicollect:
     @staticmethod
     def _parse_point(data):
         """
-        :type data: list
+        :type data: dict
         :rtype: list
         """
 
