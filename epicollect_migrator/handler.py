@@ -18,7 +18,3 @@ def handle(_, __):
     database = Database.connect(connection_uri=os.environ['DATABASE_CONNECTION_URI'])
     database.add_field_points(points)
     database.close()
-
-
-if __name__ == "__main__":
-    handle('', '')
