@@ -13,13 +13,9 @@ class ImageStore:
     def add_points(self, points):
 
         for point in points:
-
             for index in [44, 45, 47, 48]:
-                print('index: ', index)
 
                 image_id = point[index]
-
-                print('id: ', image_id)
 
                 if image_id:
 
