@@ -8,6 +8,7 @@ class Epicollect:
 
         self._base_url = base_url
         self._search_endpoint = f'{base_url}/api/export/entries/{project_name}'
+        self._media_endpoint = f'{base_url}/api/export/media/{project_name}'
         self._client_id = client_id
         self._client_secret = client_secret
 
@@ -16,6 +17,14 @@ class Epicollect:
         access_token = self._get_token()
 
         return self._get_data(self._search_endpoint, access_token, data=[])
+
+    def get_image(self, image_id):
+
+        url = f'{self._media_endpoint}?type=photo&format=entry_original&name={image_id}'
+
+        response = requests.get(url, headers={'Authorization': 'Bearer ' + self._get_token()})
+
+        return response
 
     def _get_data(self, url, access_token, data):
 

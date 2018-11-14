@@ -17,6 +17,7 @@ functions:
       EPICOLLECT_CLIENT_ID: ${file(./serverless.env.yml):${self:provider.stage}.EPICOLLECT_CLIENT_ID}
       EPICOLLECT_CLIENT_SECRET: ${file(./serverless.env.yml):${self:provider.stage}.EPICOLLECT_CLIENT_SECRET}
       DATABASE_CONNECTION_URI: ${file(./serverless.env.yml):${self:provider.stage}.DATABASE_CONNECTION_URI}
+      BUCKET_NAME: ${file(./serverless.env.yml):${self:provider.stage}.BUCKET_NAME}
 
 plugins:
   - serverless-python-requirements
