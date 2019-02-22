@@ -25,6 +25,7 @@ def handle(_, __):
     points_v1 = epicollect_v1.get_points(version_2=False)
     points_v2 = epicollect_v2.get_points(version_2=True)
 
+    # TODO: Find better way to handle this automatically
     #image_store.add_points(points_v1)
 
     database = Database.connect(connection_uri=os.environ['DATABASE_CONNECTION_URI'])
