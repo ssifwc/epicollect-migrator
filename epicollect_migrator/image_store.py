@@ -10,10 +10,15 @@ class ImageStore:
         self._bucket_name = bucket_name
         self._s3 = boto3.resource('s3')
 
-    def add_points(self, points):
+    def add_points(self, points, version='v1'):
+
+        if version == 'v1':
+            photo_indices = [44, 45, 47, 48]
+        else:
+            photo_indices = [102, 103, 105, 106]
 
         for point in points:
-            for index in [44, 45, 47, 48]:
+            for index in photo_indices:
 
                 image_id = point[index]
 
