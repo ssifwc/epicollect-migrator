@@ -169,7 +169,7 @@ class Epicollect:
 
         location = data['Coor']
         longitude, latitude = location['longitude'], location['latitude']
-        if type(longitude) is str and type(latitude) is str:
+        if type(longitude) is str or type(latitude) is str:
             point = None
         else:
             point = Point(longitude, latitude).wkt
