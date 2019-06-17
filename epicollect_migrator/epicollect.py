@@ -177,6 +177,14 @@ class Epicollect:
         else:
             point = Point(longitude, latitude).wkt
 
+        bucket_flow_rate = data.get('102_Flow_rate_Ls_if_')
+        area_and_velocity_flow_rate = data.get('108_Flow_Rate_averag')
+
+        if not bucket_flow_rate:
+            flow_rate = area_and_velocity_flow_rate
+        else:
+            flow_rate = bucket_flow_rate
+
         return [
             data.get('ec5_uuid'),
              data.get('created_at'),
@@ -272,7 +280,7 @@ class Epicollect:
              data.get('93_Time_2_sec'),
              data.get('94_Time_3_sec'),
              data.get('81_Enter_XSection_Ar'),
-             data.get('108_Flow_Rate_averag'),
+             flow_rate,
              data.get('35_Measurement_1_Ls'),
              data.get('61_Measurement_1_Tim'),
              data.get('36_Measurement_2_Ls'),
