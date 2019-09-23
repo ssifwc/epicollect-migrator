@@ -295,9 +295,9 @@ class Epicollect:
              data.get('37_Additional_Photo_'),
              data.get('61_Short_video'),
              data.get('46_Are_you_taking_wa'),
-             data.get('59_pH'),
-             data.get('60_Temperature'),
-             data.get('61_Conductivity'),
+             data.get('phOakton'),
+             data.get('TempWater'),
+             data.get('Cond'),
              data.get('122_Total_Dissolved_'),
              data.get('123_Dissolved_Oxygen'),
              data.get('36_Other_comments')
