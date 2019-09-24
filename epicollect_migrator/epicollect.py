@@ -177,13 +177,17 @@ class Epicollect:
         else:
             point = Point(longitude, latitude).wkt
 
-        bucket_flow_rate = data.get('102_Flow_rate_Ls_if_')
-        area_and_velocity_flow_rate = data.get('108_Flow_Rate_averag')
+        vessel_flow = data.get('BandTLpersec')
+        wetted_width_flow = data.get('FlowRateLpersecFloat')
+        meter_column_flow = data.get('FlowRateLpersec')
 
-        if not bucket_flow_rate:
-            flow_rate = area_and_velocity_flow_rate
+        if not vessel_flow:
+            if not wetted_width_flow:
+                flow_rate = meter_column_flow
+            else:
+                flow_rate = wetted_width_flow
         else:
-            flow_rate = bucket_flow_rate
+            flow_rate = vessel_flow
 
         return [
             data.get('ec5_uuid'),
@@ -299,7 +303,9 @@ class Epicollect:
              data.get('TempWater'),
              data.get('Cond'),
              data.get('122_Total_Dissolved_'),
-             data.get('123_Dissolved_Oxygen'),
+             data.get('DO'),
+             data.get('Alk'),
+             data.get('Hard'),
              data.get('36_Other_comments')
         ]
 

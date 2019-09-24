@@ -260,6 +260,8 @@ class Database:
                     conductivity,
                     total_dissolved,
                     dissolved_oxygen,
+                    alkalinity,
+                    hardness,
                     other_comments
                 )
                 VALUES %s
@@ -379,6 +381,8 @@ class Database:
                     conductivity = excluded.conductivity,
                     total_dissolved = excluded.total_dissolved,
                     dissolved_oxygen = excluded.dissolved_oxygen,
+                    alkalinity = excluded.alkalinity,
+                    hardness = excluded.hardness,
                     other_comments = excluded.other_comments;
         """
 
