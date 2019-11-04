@@ -2,7 +2,6 @@ import os
 
 from epicollect_migrator.epicollect import Epicollect
 from epicollect_migrator.database import Database
-from epicollect_migrator.image_store import ImageStore
 
 
 epicollect_v1 = Epicollect(
@@ -17,18 +16,11 @@ epicollect_v2 = Epicollect(
     client_id=os.environ['EPICOLLECT_CLIENT_ID_2'],
     client_secret=os.environ['EPICOLLECT_CLIENT_SECRET_2'])
 
-image_store_v1 = ImageStore(epicollect_v1, bucket_name='ssifwc-images')
-image_store_v2 = ImageStore(epicollect_v2, bucket_name='ssifwc-images')
-
 
 def handle(_, __):
 
     points_v1 = epicollect_v1.get_points(version_2=False)
     points_v2 = epicollect_v2.get_points(version_2=True)
-
-    # TODO: Find better way to handle this automatically
-    # image_store_v1.add_points(points_v1, version='v1')
-    # image_store_v2.add_points(points_v2, version='v2')
 
     database = Database.connect(connection_uri=os.environ['DATABASE_CONNECTION_URI'])
     database.add_v1_points(points_v1)
