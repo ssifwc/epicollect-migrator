@@ -6,3 +6,4 @@ package.json
 .idea
 target
 venv
+/serverless.env.yml
