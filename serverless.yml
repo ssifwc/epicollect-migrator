@@ -2,7 +2,7 @@ service: epicollect-migrator
 
 provider:
   name: aws
-  region: us-east-1
+  region: us-west-2
   runtime: python3.7
 
 functions:
@@ -12,16 +12,10 @@ functions:
     events:
       - schedule: rate(24 hours)
     environment:
-      EPICOLLECT_BASE_URL: ${file(./serverless.env.yml):${self:provider.stage}.EPICOLLECT_BASE_URL}
-      EPICOLLECT_PROJECT_NAME: ${file(./serverless.env.yml):${self:provider.stage}.EPICOLLECT_PROJECT_NAME}
-      EPICOLLECT_CLIENT_ID: ${file(./serverless.env.yml):${self:provider.stage}.EPICOLLECT_CLIENT_ID}
-      EPICOLLECT_CLIENT_SECRET: ${file(./serverless.env.yml):${self:provider.stage}.EPICOLLECT_CLIENT_SECRET}
-      EPICOLLECT_PROJECT_NAME_2: ${file(./serverless.env.yml):${self:provider.stage}.EPICOLLECT_PROJECT_NAME_2}
-      EPICOLLECT_CLIENT_ID_2: ${file(./serverless.env.yml):${self:provider.stage}.EPICOLLECT_CLIENT_ID_2}
-      EPICOLLECT_CLIENT_SECRET_2: ${file(./serverless.env.yml):${self:provider.stage}.EPICOLLECT_CLIENT_SECRET_2}
-      DATABASE_CONNECTION_URI: ${file(./serverless.env.yml):${self:provider.stage}.DATABASE_CONNECTION_URI}
-      BUCKET_NAME: ${file(./serverless.env.yml):${self:provider.stage}.BUCKET_NAME}
-
+      EPICOLLECT_BASE_URL: ${env:EPICOLLECT_BASE_URL, ssm:EPICOLLECT_BASE_URL}
+      EPICOLLECT_PROJECT_NAME: ${env:EPICOLLECT_PROJECT_NAME, ssm:EPICOLLECT_PROJECT_NAME}
+      EPICOLLECT_PROJECT_NAME_2: ${env:EPICOLLECT_PROJECT_NAME_2, ssm:EPICOLLECT_PROJECT_NAME_2}
+      DATABASE_CONNECTION_URI: ${env:DATABASE_CONNECTION_URI, ssm:DATABASE_CONNECTION_URI~true}
 
 plugins:
   - serverless-python-requirements

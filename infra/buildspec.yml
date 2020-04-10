@@ -6,12 +6,10 @@ phases:
       nodejs: 12
       python: 3.7
     commands:
-      - pip install -r requirements.txt -t infra
       - npm install -g serverless
       - sls plugin install -n serverless-python-requirements
   build:
     commands:
-      - cd ..
       - sls deploy
 
 
