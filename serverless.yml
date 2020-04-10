@@ -3,7 +3,7 @@ service: epicollect-migrator
 provider:
   name: aws
   region: us-east-1
-  runtime: python3.6
+  runtime: python3.7
 
 functions:
   migrate:
@@ -21,6 +21,7 @@ functions:
       EPICOLLECT_CLIENT_SECRET_2: ${file(./serverless.env.yml):${self:provider.stage}.EPICOLLECT_CLIENT_SECRET_2}
       DATABASE_CONNECTION_URI: ${file(./serverless.env.yml):${self:provider.stage}.DATABASE_CONNECTION_URI}
       BUCKET_NAME: ${file(./serverless.env.yml):${self:provider.stage}.BUCKET_NAME}
+
 
 plugins:
   - serverless-python-requirements

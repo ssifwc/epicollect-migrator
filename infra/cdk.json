@@ -1,0 +1,10 @@
+{
+  "app": "python3 app.py",
+  "context": {
+    "stack.name": "webgis-website-and-pipeline",
+    "github.owner": "ssifwc",
+    "github.repo": "webGIS",
+    "github.branch": "master",
+    "github.token.secretmanager.secret.id": "aws-ssifwc-github-token"
+  }
+}

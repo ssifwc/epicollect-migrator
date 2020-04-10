@@ -1,0 +1,5 @@
+aws-cdk.core==1.32.1
+aws_cdk.aws_s3==1.32.1
+aws_cdk.aws_codebuild==1.32.1
+aws_cdk.aws_codepipeline==1.32.1
+aws_cdk.aws_codepipeline_actions==1.32.1

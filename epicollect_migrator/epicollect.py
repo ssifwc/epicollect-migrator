@@ -4,48 +4,23 @@ from shapely.geometry import Point
 
 class Epicollect:
 
-    def __init__(self, base_url, project_name, client_id, client_secret):
-
+    def __init__(self, base_url, project_name):
         self._base_url = base_url
         self._search_endpoint = f'{base_url}/api/export/entries/{project_name}'
         self._media_endpoint = f'{base_url}/api/export/media/{project_name}'
-        self._client_id = client_id
-        self._client_secret = client_secret
 
     def get_points(self, version_2=True):
+        return self._get_data(self._search_endpoint, data=[], version_2=version_2)
 
-        access_token = self._get_token()
+    def _get_data(self, url, data, version_2=True):
 
-        return self._get_data(self._search_endpoint, access_token, data=[], version_2=version_2)
-
-    def get_image(self, image_id):
-
-        url = f'{self._media_endpoint}?type=photo&format=entry_original&name={image_id}'
-
-        response = requests.get(url, headers={'Authorization': 'Bearer ' + self._get_token()})
-
-        return response
-
-    def _get_data(self, url, access_token, data, version_2=True):
-
-        response = self._get_response(url, access_token)
+        response = self._get_response(url)
         new_data = self._get_data_from_response(response, version_2) + data
 
         if self._response_has_next(response):
-            return self._get_data(response['links']['next'], access_token, new_data, version_2)
+            return self._get_data(response['links']['next'], new_data, version_2)
 
         return new_data
-
-    def _get_token(self):
-        params = {
-            'grant_type': 'client_credentials',
-            'client_id': self._client_id,
-            'client_secret': self._client_secret
-        }
-
-        response = requests.post(f'{self._base_url}/api/oauth/token', data=params)
-
-        return response.json()['access_token']
 
     @staticmethod
     def _response_has_next(response):
@@ -57,14 +32,13 @@ class Epicollect:
         return bool(response['links']['next'])
 
     @staticmethod
-    def _get_response(url, access_token):
+    def _get_response(url):
         """
         :type url: str
-        :type access_token: str
         :rtype: dict
         """
 
-        response = requests.get(url, headers={'Authorization': 'Bearer ' + access_token})
+        response = requests.get(url)
 
         return response.json()
 
@@ -109,7 +83,7 @@ class Epicollect:
         return [
             data['ec5_uuid'],
             data['created_at'],
-            data['created_by'],
+            data.get('created_by'),
             data['title'],
             data['1_Location_Name_Desc'],
             'water_matters',
