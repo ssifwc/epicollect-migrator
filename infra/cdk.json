@@ -1,10 +1,13 @@
 {
   "app": "python3 app.py",
   "context": {
-    "stack.name": "webgis-website-and-pipeline",
+    "stack.name": "epicollect-migrator-lambda-and-pipeline",
     "github.owner": "ssifwc",
     "github.repo": "epicollect-migrator",
     "github.branch": "prepare-aws-codepipeline",
-    "github.token.secretsmanager.secret.id": "aws-ssifwc-github-token"
+    "github.token.secretsmanager.secret.id": "aws-ssifwc-github-token",
+    "epicollect.base.url": "https://five.epicollect.net",
+    "epicollect.project.name": "ssi-watershed-stewardship-group",
+    "epicollect.project.name.2": "ssi-watershed-groups-version-2"
   }
 }

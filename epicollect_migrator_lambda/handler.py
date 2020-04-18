@@ -1,7 +1,7 @@
 import os
 
-from epicollect_migrator.epicollect import Epicollect
-from epicollect_migrator.database import Database
+from epicollect_migrator_lambda.epicollect import Epicollect
+from epicollect_migrator_lambda.database import Database
 
 
 def handle():

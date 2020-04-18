@@ -14,12 +14,16 @@ Install Serverless Python Requirements
     
  Create a `serverless.env.yml` file which is used as part of the deployment process. Here is an example:
  
+ ## Required Variables - MUST be set with ENV or SSM
  ```buildoutcfg
-dev:
-  EPICOLLECT_BASE_URL: xxxxx
+    DATABASE_CONNECTION_URI: xxxxx 
+```
+ 
+ ## Optional Variables - correct defaults exist, but they can be overridden in ENV or AWS SSM
+ ```buildoutcfg
+  EPICOLLECT_BASE_URL: xxxxx 
   EPICOLLECT_PROJECT_NAME: xxxxx
   EPICOLLECT_PROJECT_NAME_2: xxxxx
-  DATABASE_CONNECTION_URI: xxxxx
 ```
 
 ## Deployment
