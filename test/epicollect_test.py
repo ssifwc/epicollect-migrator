@@ -14,7 +14,7 @@ class EpicollectTest(unittest.TestCase):
         self.env.set('DATABASE_CONNECTION_URI', 'postgresql://postgres:password@localhost:5432/postgres')
 
     def test_epicollect(self):
-        handle()
+        handle('how cares', 'still dont care')
 
 
 if __name__ == '__main__':

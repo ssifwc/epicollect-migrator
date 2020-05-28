@@ -4,7 +4,7 @@ from epicollect_migrator.epicollect import Epicollect
 from epicollect_migrator.database import Database
 
 
-def handle():
+def handle(_, __):
 
     epicollect_v1 = Epicollect(
         base_url=os.environ['EPICOLLECT_BASE_URL'],
