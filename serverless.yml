@@ -4,6 +4,7 @@ provider:
   name: aws
   region: us-east-1
   runtime: python3.6
+  timeout: 300
 
 functions:
   migrate:
