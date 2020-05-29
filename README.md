@@ -18,13 +18,9 @@ Install Serverless Python Requirements
 dev:
   EPICOLLECT_BASE_URL: xxxxx
   EPICOLLECT_PROJECT_NAME: xxxxx
-  EPICOLLECT_CLIENT_ID: xxxxx
-  EPICOLLECT_CLIENT_SECRET: xxxxx
   EPICOLLECT_PROJECT_NAME_2: xxxxx
-  EPICOLLECT_CLIENT_ID_2: xxxxx
-  EPICOLLECT_CLIENT_SECRET_2: xxxxx
   DATABASE_CONNECTION_URI: xxxxx
-  BUCKET_NAME: xxxxx
+  
 ```
 
 ## Deployment
