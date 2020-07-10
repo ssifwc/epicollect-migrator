@@ -26,10 +26,6 @@ def handle(_, __):
     database.close()
     print('savings points in db done.')
 
-    print('vessel_flow_count: ' + str(Epicollect.vessel_flow_count))
-    print('wetted_width_count: ' + str(Epicollect.wetted_width_count))
-    print('metric_column_count: ' + str(Epicollect.metric_column_count))
-
 
 if __name__ == '__main__':
     handle({}, {})

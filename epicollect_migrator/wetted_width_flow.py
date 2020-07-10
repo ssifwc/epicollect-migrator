@@ -1,3 +1,6 @@
+import logging
+
+
 class WettedWidthFlow:
     measurement_fields = ['W1P1', 'D1P1', 'W2P2', 'D2P2', 'W3P3', 'D3P3', 'W4P4', 'D4P4', 'W5P5', 'D5P5', 'W6P6',
                           'D6P6', 'W7D7', 'D7P7', 'W8D8', 'D8P8', 'W9P9', 'D9P9', 'W10P10', 'D10P10', 'T1s', 'T2s',
@@ -12,9 +15,7 @@ class WettedWidthFlow:
         if len(ts_dict) < 1:
             return None
 
-        print(' ')
-        print('EPICOLLECT ID: ' + str(data.get('ec5_uuid')))
-        print('VALUES FROM EPICOLLECT: ' + self.get_wetted_width_flow_values(data))
+        logging.info('EPICOLLECT ID: ' + str(data.get('ec5_uuid')))
 
         xsecareacm2 = self.get_cross_section(data)
 
@@ -22,9 +23,9 @@ class WettedWidthFlow:
         average_t = sum(ts_dict.values()) / len(ts_dict)
         flow = 0.25 * (d1streamm / average_t) * (xsecareacm2 / 10)
 
-        print('FLOW FROM EPICOLLECT (FlowRateLpersecFloat): ' + str(data.get('FlowRateLpersecFloat')))
-        print('FLOW: 0.25 * (' + str(d1streamm) + '/' + str(average_t) + ' * ' + str(xsecareacm2) + ' / 10 = ' + str(
-            round(flow, 2)))
+        logging.info(
+            'FLOW: 0.25 * (' + str(d1streamm) + '/' + str(average_t) + ' * ' + str(xsecareacm2) + ' / 10 = ' + str(
+                round(flow, 2)))
 
         return round(flow, 2)
 
@@ -85,7 +86,7 @@ class WettedWidthFlow:
             equation = equation + ' + (' + str(W10P10) + ' - ' + str(W9P9) + ') * 0.5 * (' + str(D10P10) + ' + ' + str(
                 W10P10) + ')'
             xsecareacm2 = xsecareacm2 + (W10P10 - W9P9) * 0.5 * (D10P10 + W10P10)
-        print('xsecareacm2 equation: ' + equation + ' = ' + str(xsecareacm2))
+
         return xsecareacm2
 
     @staticmethod
