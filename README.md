@@ -4,6 +4,8 @@ This a service that activates once every 24hrs to transfer newly gathered Epicol
 
 ## Setup
 
+    * brew install postgresql
+
 Install Serverless:
 
     npm install -g serverless
@@ -16,7 +18,7 @@ Install Serverless Python Requirements
  
  ```buildoutcfg
 dev:
-  EPICOLLECT_BASE_URL: xxxxx
+  EPICOLLECT_BASE_URL: xxxxx**
   EPICOLLECT_PROJECT_NAME: xxxxx
   EPICOLLECT_PROJECT_NAME_2: xxxxx
   DATABASE_CONNECTION_URI: xxxxx

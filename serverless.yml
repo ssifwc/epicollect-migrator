@@ -3,7 +3,7 @@ service: epicollect-migrator
 provider:
   name: aws
   region: us-east-1
-  runtime: python3.6
+  runtime: python3.7
   timeout: 300
 
 functions:
