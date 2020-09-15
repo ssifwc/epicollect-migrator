@@ -1,22 +1,28 @@
 import os
 
-from epicollect_migrator.epicollect import Epicollect
+from epicollect_migrator.epicollect_parser import EpicollectParser
+from epicollect_migrator.epicollect_v2_parser import EpicollectV2Parser
 from epicollect_migrator.database import Database
 
 
 def handle(_, __):
-
-    epicollect_v2 = Epicollect(
+    epicollect_v2 = EpicollectV2Parser(
         base_url=os.environ['EPICOLLECT_BASE_URL'],
         project_name=os.environ['EPICOLLECT_PROJECT_NAME_2'])
 
-    print('getting points from epicollect ... ')
-    points_v2 = epicollect_v2.get_points()
-    print('getting points done.')
+    epicollect_v3 = EpicollectParser(
+        base_url=os.environ['EPICOLLECT_BASE_URL'],
+        project_name=os.environ['EPICOLLECT_PROJECT_NAME_3'])
 
-    print('savings points in db ... ')
+    print('getting points from epicollect ... ')
     database = Database.connect(connection_uri=os.environ['DATABASE_CONNECTION_URI'])
-    database.add_v2_points(points_v2)
+
+    observations_v2 = epicollect_v2.get_field_observations()
+    database.add_field_observations(observations_v2)
+
+    observations_v3 = epicollect_v3.get_field_observations()
+    database.add_field_observations(observations_v3)
+
     database.close()
     print('savings points in db done.')
 

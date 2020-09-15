@@ -14,7 +14,6 @@ class WettedWidthFlow:
 
         print(' ')
         print('EPICOLLECT ID: ' + str(data.get('ec5_uuid')))
-        print('VALUES FROM EPICOLLECT: ' + self.get_wetted_width_flow_values(data))
 
         xsecareacm2 = self.get_cross_section(data)
 
@@ -22,7 +21,6 @@ class WettedWidthFlow:
         average_t = sum(ts_dict.values()) / len(ts_dict)
         flow = 0.25 * (d1streamm / average_t) * (xsecareacm2 / 10)
 
-        print('FLOW FROM EPICOLLECT (FlowRateLpersecFloat): ' + str(data.get('FlowRateLpersecFloat')))
         print('FLOW: 0.25 * (' + str(d1streamm) + '/' + str(average_t) + ' * ' + str(xsecareacm2) + ' / 10 = ' + str(
             round(flow, 2)))
 
@@ -41,7 +39,7 @@ class WettedWidthFlow:
         D5P5 = parse_float(data.get('D5P5'))
         W6P6 = parse_float(data.get('W6P6'))
         D6P6 = parse_float(data.get('D6P6'))
-        W7D7 = parse_float(data.get('W7D7'))  # typo: should be W7P7 ... epicollect seems wrong
+        W7D7 = parse_float(data.get('W7P7'))  # typo: should be W7P7 ... epicollect seems wrong
         D7P7 = parse_float(data.get('D7P7'))
         W8D8 = parse_float(data.get('W8D8'))
         D8P8 = parse_float(data.get('D8P8'))
@@ -85,7 +83,7 @@ class WettedWidthFlow:
             equation = equation + ' + (' + str(W10P10) + ' - ' + str(W9P9) + ') * 0.5 * (' + str(D10P10) + ' + ' + str(
                 W10P10) + ')'
             xsecareacm2 = xsecareacm2 + (W10P10 - W9P9) * 0.5 * (D10P10 + W10P10)
-        print('xsecareacm2 equation: ' + equation + ' = ' + str(xsecareacm2))
+
         return xsecareacm2
 
     @staticmethod

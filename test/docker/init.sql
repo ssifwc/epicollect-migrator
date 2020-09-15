@@ -134,6 +134,19 @@ ALTER TABLE public.culverts_id_seq OWNER TO postgres;
 ALTER SEQUENCE public.culverts_id_seq OWNED BY public.culverts.id;
 
 
+-- noinspection SqlNoDataSourceInspection
+
+CREATE TABLE public.field_observations (
+    uuid uuid,
+    coordinates public.geometry,
+    flow_rate text,
+    json_record json
+);
+
+ALTER TABLE public.field_observations OWNER TO postgres;
+ALTER TABLE ONLY public.field_observations ADD CONSTRAINT field_observations_uuid_key UNIQUE (uuid);
+
+
 --
 -- Name: epicollect_observations; Type: TABLE; Schema: public; Owner: postgres
 --
