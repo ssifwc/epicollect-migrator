@@ -1,15 +1,15 @@
-service: epicollect-migrator
+service: epicollect-importer
 
 provider:
   name: aws
   region: us-east-1
-  runtime: python3.6
+  runtime: python3.7
   timeout: 300
 
 functions:
   migrate:
-    handler: epicollect_migrator.handler.handle
-    name: epicollect_migrator
+    handler: epicollect_importer.handler.handle
+    name: epicollect_importer
     events:
       - schedule: rate(24 hours)
     environment:

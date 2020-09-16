@@ -16,7 +16,7 @@ class Database:
     def connect(cls, connection_uri):
         """"
         :type connection_uri: str
-        :rtype: epicollect_migrator.database.Database
+        :rtype: epicollect_importer.database.Database
         """
         connection = psycopg2.connect(connection_uri)
 

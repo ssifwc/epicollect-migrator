@@ -1,4 +1,4 @@
-# SSIFWC - Epicollect Migrator
+# SSIFWC - Epicollect Importer
 
 This a service that activates once every 24hrs to transfer newly gathered Epicollect points into the SSIFWC postgres database.
 

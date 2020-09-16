@@ -2,7 +2,7 @@ import requests
 from shapely.geometry import Point
 import json
 
-from epicollect_migrator.wetted_width_flow import WettedWidthFlow
+from epicollect_importer.wetted_width_flow import WettedWidthFlow
 
 
 class EpicollectParser:

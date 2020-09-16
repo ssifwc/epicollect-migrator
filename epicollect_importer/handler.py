@@ -1,8 +1,8 @@
 import os
 
-from epicollect_migrator.epicollect_parser import EpicollectParser
-from epicollect_migrator.epicollect_v2_parser import EpicollectV2Parser
-from epicollect_migrator.database import Database
+from epicollect_importer.epicollect_parser import EpicollectParser
+from epicollect_importer.epicollect_v2_parser import EpicollectV2Parser
+from epicollect_importer.database import Database
 
 
 def handle(_, __):

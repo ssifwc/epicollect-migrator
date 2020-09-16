@@ -1,6 +1,6 @@
 import unittest
 
-from epicollect_migrator.wetted_width_flow import WettedWidthFlow
+from epicollect_importer.wetted_width_flow import WettedWidthFlow
 
 
 class WettedWidthFlowTest(unittest.TestCase):

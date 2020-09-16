@@ -1,6 +1,6 @@
 import unittest
 
-from epicollect_migrator.handler import handle
+from epicollect_importer.handler import handle
 from test.support import EnvironmentVarGuard
 
 
