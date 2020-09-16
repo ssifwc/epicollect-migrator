@@ -27,13 +27,13 @@ class Database:
                 INSERT INTO field_observations (
                     uuid,
                     coordinates,
-                    flow_rate,
+                    calculated_flow_rate,
                     json_record)
                 VALUES %s
                 ON CONFLICT (uuid) DO UPDATE SET
                     uuid = excluded.uuid,
                     coordinates = excluded.coordinates,
-                    flow_rate = excluded.flow_rate,
+                    calculated_flow_rate = excluded.calculated_flow_rate,
                     json_record = excluded.json_record;
                 """
         execute_values(self._cursor, sql, observation)
