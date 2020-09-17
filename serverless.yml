@@ -3,7 +3,7 @@ service: epicollect-importer
 provider:
   name: aws
   region: us-east-1
-  runtime: python3.7
+  runtime: python3.6
   timeout: 300
 
 functions:
@@ -14,8 +14,8 @@ functions:
       - schedule: rate(24 hours)
     environment:
       EPICOLLECT_BASE_URL: ${file(./serverless.env.yml):${self:provider.stage}.EPICOLLECT_BASE_URL}
-      EPICOLLECT_PROJECT_NAME: ${file(./serverless.env.yml):${self:provider.stage}.EPICOLLECT_PROJECT_NAME}
       EPICOLLECT_PROJECT_NAME_2: ${file(./serverless.env.yml):${self:provider.stage}.EPICOLLECT_PROJECT_NAME_2}
+      EPICOLLECT_PROJECT_NAME_3: ${file(./serverless.env.yml):${self:provider.stage}.EPICOLLECT_PROJECT_NAME_3}
       DATABASE_CONNECTION_URI: ${file(./serverless.env.yml):${self:provider.stage}.DATABASE_CONNECTION_URI}
 
 plugins:
