@@ -134,198 +134,31 @@ ALTER TABLE public.culverts_id_seq OWNER TO postgres;
 ALTER SEQUENCE public.culverts_id_seq OWNED BY public.culverts.id;
 
 
---
--- Name: epicollect_observations; Type: TABLE; Schema: public; Owner: postgres
---
+-- noinspection SqlNoDataSourceInspection
 
-CREATE TABLE public.epicollect_observations (
+CREATE TABLE public.field_observations (
     uuid uuid,
-    created_by text,
-    title text,
-    location_name_desc text,
-    general_island_area text,
-    named_location_if_known text,
-    watershed text[],
-    describe_other_watershed text,
-    where_am_i public.geometry,
-    weather_check_all_that_apply text[],
-    last_significant_precipitation_event text[],
-    safe_to_work_at_this_location text[],
-    name_initials_or_nickname text,
-    no_of_participants integer,
-    type_of_visit text[],
-    general_land_use_in_area_to_25m text[],
-    describe_other_land_use text,
-    types_of_water_use text[],
-    describe_other_water_use text,
-    this_area_recieve text[],
-    describe_other_drainage text,
-    vegetation_in_area text[],
-    canopy_coverage_within_5m text[],
-    soil_rock_type text[],
-    water_body_type text,
-    water_body_name_if_known text,
-    water_movement_visible text,
-    likely_permenance text,
-    flow_measurement_location text[],
-    describe_other_fl text,
-    wetted_width_m text,
-    rate_of_flow_qualitative text,
-    describe_water_level_qualitative text,
-    method_of_measurement text,
-    describe_other_measurement text,
-    flow_rate_quantity_1 double precision,
-    any_of_the_following_on_the_water_surface text[],
-    type_of_algae_if_present text,
-    evidence_of_aquatic_life text[],
-    describe_other_incidental_species text,
-    water_colour_hue text[],
-    photo_view_upstr text,
-    photo_view_downstream text,
-    do_you_want_to_take_more_photos text[],
-    additional_photo_1 text,
-    additional_photo_2 text,
-    are_you_taking_water_samples text,
-    ph double precision,
-    temperature double precision,
-    conductivity double precision,
-    other_comments text,
-    water_matters text,
-    created_at timestamp without time zone,
-    flow_rate_quantity_2 double precision,
-    flow_rate_quantity_3 double precision
+    coordinates public.geometry,
+    calculated_flow_rate text,
+    json_record json
 );
 
+ALTER TABLE public.field_observations OWNER TO postgres;
+ALTER TABLE ONLY public.field_observations ADD CONSTRAINT field_observations_uuid_key UNIQUE (uuid);
 
-ALTER TABLE public.epicollect_observations OWNER TO postgres;
+CREATE VIEW public.v_all_points AS
+SELECT uuid,
+       coordinates AS where_am_i,
+       (json_record ->> 'created_at')::timestamp without time zone AS created_at,
+       (NULLIF(json_record ->> 'temperature_water', ''::text))::double precision AS temperature,
+       (NULLIF(json_record ->> 'conductivity', ''::text))::double precision AS conductivity,
+       (NULLIF(json_record ->> 'ph_oakton', ''::text))::double precision AS ph,
+       (NULLIF(calculated_flow_rate, ''::text))::double precision AS flow_rate,
+       (NULLIF(json_record ->> 'alkalinity', ''::text))::double precision AS alkalinity,
+       (NULLIF(json_record ->> 'hardness', ''::text))::double precision AS hardness,
+       (NULLIF(json_record ->> 'dissolved_oxygen', ''::text))::double precision AS dissolved_oxygen
+FROM public.field_observations;
 
---
--- Name: epicollect_observations_v2; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.epicollect_observations_v2 (
-    uuid uuid,
-    created_at text,
-    created_by text,
-    title text,
-    locname text,
-    i_am_a_hiker_walker text,
-    date text,
-    photo text,
-    water_body_type text,
-    water_movement text,
-    brief_description text,
-    should_ssifwc_visit text,
-    island_area text,
-    sub_loc_north text,
-    sub_loc_central text,
-    sub_loc_south text,
-    other_loc_north text,
-    other_loc_central text,
-    other_loc_south text,
-    coord public.geometry,
-    date_2 text,
-    time_2 text,
-    temp text,
-    cloud_cover text,
-    precipitation text,
-    last_sig_precipitation text,
-    safe_to_work text,
-    name text,
-    number_of_participants text,
-    water_moving text,
-    flow_type text,
-    visit_type text,
-    gen_land_use text,
-    other_land_use text,
-    water_use text,
-    other_water_use text,
-    drainage_sources text,
-    terrain text,
-    water_level text,
-    vegetation text,
-    canopy_coverage text,
-    surficial_geology text,
-    water_surface text,
-    algae text,
-    algae_extent text,
-    aquatic_life text,
-    other_species text,
-    absolute_depth_me text,
-    describe_location text,
-    describe_reference text,
-    photo_of_water_le text,
-    flow_measure text,
-    flow_measure_loc text,
-    current_wetted_wi text,
-    estimated_wetted text,
-    water_color text,
-    water_turbitidy_q text,
-    type_measure text,
-    rate_of_flow text,
-    describe_water_level text,
-    method_measure text,
-    simple_or_detailed text,
-    measure_depth_cm text,
-    distance_from_ban_1 text,
-    depth_at_pt_1_cm text,
-    distance_from_ban_2 text,
-    depth_at_pt_2_cm text,
-    distance_from_ban_3 text,
-    depth_at_pt_3_cm text,
-    distance_from_ban_4 text,
-    depth_at_pt_4_cm text,
-    distance_from_ban_5 text,
-    depth_at_pt_5_cm text,
-    distance_from_ban_6 text,
-    depth_at_pt_6_cm text,
-    distance_from_ban_7 text,
-    depth_at_pt_7_cm text,
-    distance_from_ban_8 text,
-    depth_at_pt_8_cm text,
-    distance_from_ban_9 text,
-    depth_at_pt_9_cm text,
-    distance_from_ban_10 text,
-    depth_at_pt_10_cm text,
-    quantitative_meas text,
-    velocity_1_ms text,
-    velocity_2_ms text,
-    velocity_3_ms text,
-    depth_to_meter_fr text,
-    depth_from_meter text,
-    enter_xsection_ar_1 text,
-    distance_traveled text,
-    time_1_sec text,
-    time_2_sec text,
-    time_3_sec text,
-    enter_xsection_ar_2 text,
-    flow_rate_average text,
-    measurement_1_ls text,
-    measurement_1_tim text,
-    measurement_2_ls text,
-    measurement_2_tim text,
-    measurement_3_ls text,
-    measurement_3_tim text,
-    are_you_taking_ph text,
-    photos text,
-    photo_view_downst text,
-    do_you_want_to_ta text,
-    additional_photo_1 text,
-    additional_photo_2 text,
-    short_video text,
-    are_you_taking_wa text,
-    ph text,
-    temperature text,
-    conductivity text,
-    total_dissolved text,
-    dissolved_oxygen text,
-    other_comments text,
-    alkalinity text,
-    hardness text
-);
-
-
-ALTER TABLE public.epicollect_observations_v2 OWNER TO postgres;
 
 --
 -- Name: faults; Type: TABLE; Schema: public; Owner: postgres
@@ -602,39 +435,6 @@ ALTER TABLE public.stream_network_id_seq OWNER TO postgres;
 
 ALTER SEQUENCE public.stream_network_id_seq OWNED BY public.stream_network.id;
 
-
---
--- Name: v_all_points; Type: VIEW; Schema: public; Owner: postgres
---
-
-CREATE VIEW public.v_all_points AS
- SELECT epicollect_observations.uuid,
-    epicollect_observations.where_am_i,
-    epicollect_observations.created_at,
-    epicollect_observations.temperature,
-    epicollect_observations.conductivity,
-    epicollect_observations.ph,
-    (((epicollect_observations.flow_rate_quantity_1 + epicollect_observations.flow_rate_quantity_2) + epicollect_observations.flow_rate_quantity_3) / (3)::double precision) AS flow_rate,
-    NULL::double precision AS alkalinity,
-    NULL::double precision AS hardness,
-    NULL::double precision AS dissolved_oxygen
-   FROM public.epicollect_observations
-UNION
- SELECT epicollect_observations_v2.uuid,
-    epicollect_observations_v2.coord AS where_am_i,
-    (epicollect_observations_v2.created_at)::timestamp without time zone AS created_at,
-    (NULLIF(epicollect_observations_v2.temperature, ''::text))::double precision AS temperature,
-    (NULLIF(epicollect_observations_v2.conductivity, ''::text))::double precision AS conductivity,
-    (NULLIF(epicollect_observations_v2.ph, ''::text))::double precision AS ph,
-    (NULLIF(epicollect_observations_v2.flow_rate_average, ''::text))::double precision AS flow_rate,
-    (NULLIF(epicollect_observations_v2.alkalinity, ''::text))::double precision AS alkalinity,
-    (NULLIF(epicollect_observations_v2.hardness, ''::text))::double precision AS hardness,
-    (NULLIF(epicollect_observations_v2.dissolved_oxygen, ''::text))::double precision AS dissolved_oxygen
-   FROM public.epicollect_observations_v2;
-
-
-ALTER TABLE public.v_all_points OWNER TO postgres;
-
 --
 -- Name: watersheds_crd; Type: TABLE; Schema: public; Owner: postgres
 --
@@ -798,22 +598,6 @@ ALTER TABLE ONLY public.watersheds_crd ALTER COLUMN id SET DEFAULT nextval('publ
 --
 
 ALTER TABLE ONLY public.wells ALTER COLUMN id SET DEFAULT nextval('public.wells_id_seq'::regclass);
-
-
---
--- Name: epicollect_observations epicollect_observations_uuid_key; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.epicollect_observations
-    ADD CONSTRAINT epicollect_observations_uuid_key UNIQUE (uuid);
-
-
---
--- Name: epicollect_observations_v2 epicollect_observations_v2_uuid_key; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.epicollect_observations_v2
-    ADD CONSTRAINT epicollect_observations_v2_uuid_key UNIQUE (uuid);
 
 
 --
