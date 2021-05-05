@@ -1,6 +1,7 @@
 import requests
 from shapely.geometry import Point
 import json
+import time
 
 from epicollect_importer.wetted_width_flow import WettedWidthFlow
 
@@ -18,7 +19,7 @@ class EpicollectParser:
     def _get_data(self, url, data):
         response = self._get_response(url)
         new_data = self._get_data_from_response(response) + data
-
+        time.sleep(1) #eliminate risk of epicollect throttling
         if self._response_has_next(response):
             return self._get_data(response['links']['next'], new_data)
 

@@ -4,7 +4,6 @@ import json
 
 from epicollect_importer.wetted_width_flow import WettedWidthFlow
 
-
 class EpicollectV2Parser:
 
     def __init__(self, base_url, project_name):
@@ -18,7 +17,6 @@ class EpicollectV2Parser:
     def _get_data(self, url, data):
         response = self._get_response(url)
         new_data = self._get_data_from_response(response) + data
-
         if self._response_has_next(response):
             return self._get_data(response['links']['next'], new_data)
 
@@ -57,9 +55,6 @@ class EpicollectV2Parser:
         :rtype: list
         """
         v2_json_2_v3 = EpicollectV2Parser._parse_point_v2(data)
-
-        print(json.dumps(v2_json_2_v3))
-
         return [
             data.get('ec5_uuid'),
             EpicollectV2Parser.get_coordinates_as_point(v2_json_2_v3),

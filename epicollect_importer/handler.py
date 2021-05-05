@@ -1,4 +1,5 @@
 import os
+import time
 
 from epicollect_importer.epicollect_parser import EpicollectParser
 from epicollect_importer.epicollect_v2_parser import EpicollectV2Parser
@@ -17,14 +18,20 @@ def handle(_, __):
     print('getting points from epicollect ... ')
     database = Database.connect(connection_uri=os.environ['DATABASE_CONNECTION_URI'])
 
-    observations_v2 = epicollect_v2.get_field_observations()
-    database.add_field_observations(observations_v2)
+    if os.environ.get('V2') and os.environ['V2'] == 'true':
+        print('migrating V2 data')
+        observations_v2 = epicollect_v2.get_field_observations()
+        database.add_field_observations(observations_v2)
+        print('Done migrating V2 data')
+        time.sleep(60) # epicollect throttles when too many requests are done to quickly
 
+    print('migrating V3 data')
     observations_v3 = epicollect_v3.get_field_observations()
     database.add_field_observations(observations_v3)
+    print('Done migrating V3 data')
 
     database.close()
-    print('savings points in db done.')
+    print('committed field observations in db.')
 
 
 if __name__ == '__main__':
